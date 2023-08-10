@@ -19,7 +19,6 @@ jobs:
 
       - name: Build and Test
         run: |
-          cd PowerToys/deps/spdlog
           mkdir build
           cd build
           cmake ..
