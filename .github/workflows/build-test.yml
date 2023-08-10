@@ -21,6 +21,10 @@ jobs:
       
       - name: Configure build
         run: |
+          # Navigate to the correct directory containing CMakeLists.txt
+          cd Users/User/source/repos/PowerToys/.github/workflows
+      
+          # Create build directory and configure build
           mkdir build
           cd build
           cmake ..
