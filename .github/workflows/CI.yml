@@ -1,24 +1,39 @@
-name: CI
+name: Build and Test PowerToys
 
 on:
   push:
     branches:
-    - master
-
+      - main
+  pull_request:
+  
 jobs:
-  firebase-deploy:
-
-    runs-on: ubuntu-latest
-
+  build-and-test:
+    runs-on: windows-latest
+    
     steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-node@master
-      with:
-        node-version: '10.x'
-    - run: npm install
-    - run: npm run build:prod
-    - uses: w9jds/firebase-action@master
-      with:
-        args: deploy --only hosting
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up MSVC
+        uses: microsoft/setup-msvc@v2
+        with:
+          vs-version: '2019'
+      
+      - name: Install dependencies
+        run: |
+          # Install CMake using Chocolatey
+          choco install cmake --installargs '"ADD_CMAKE_TO_PATH=System"'
+      
+      - name: Configure build
+        run: |
+          mkdir build
+          cd build
+          cmake ..
+      
+      - name: Build PowerToys
+        run: cmake --build build
+      
+      - name: Run tests
+        run: |
+          cd build
+          ctest
