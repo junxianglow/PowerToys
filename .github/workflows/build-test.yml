@@ -23,6 +23,8 @@ jobs:
       - name: Configure build
         working-directory: PowerToys/build  # Set the working directory
         run: |
+          mkdir build
+          cd build
           cmake ..
       
       - name: Build PowerToys
