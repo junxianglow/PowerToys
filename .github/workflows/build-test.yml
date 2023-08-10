@@ -18,7 +18,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake
 
       - name: Configure build
-        run: cmake PowerToys/deps/spdlog/tests/.
+        run: cmake PowerToys/deps/spdlog/tests
 
       - name: Build project
         run: cmake --build .
