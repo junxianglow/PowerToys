@@ -1,4 +1,4 @@
-name: Checkout and Test
+name: Build, Test, and Deploy
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   pull_request:
 
 jobs:
-  checkout-and-test:
+  build-test-and-deploy:
     runs-on: ubuntu-latest
     
     steps:
@@ -28,4 +28,14 @@ jobs:
             ctest
           else
             echo "Tests directory not found, skipping tests."
+          fi
+
+      - name: Deploy if Tests Passed
+        if: ${{ job.status == 'success' }}
+        run: |
+          if [ -f "PowerToysInstaller.exe" ]; then
+            echo "Deploying PowerToysInstaller.exe..."
+            # Add your deployment commands here
+          else
+            echo "PowerToysInstaller.exe not found, skipping deployment."
           fi
