@@ -18,10 +18,12 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y build-essential cmake
 
       - name: Configure build
-        run: cmake .
+        run: |
+          cd deps/spdlog/tests
+          cmake .
 
       - name: Build project
-        run: cmake --build .
+        run: cmake --build deps/spdlog/tests
 
       - name: Run tests
-        run: ctest
+        run: ctest deps/spdlog/tests
